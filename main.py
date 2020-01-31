@@ -70,11 +70,34 @@ class LoginScreen(RelativeLayout):
         self.add_widget(self.passwordInput)
 
 
+class ToolScreenButton(Button):
+    def __init__(self, **kwargs):
+        super(ToolScreenButton, self).__init__(**kwargs)
+        self.text = "Button"
+        self.background_color = (1, 1, 1, 1)
+        self.pos_hint = {"center_x":0.1, "center_y":0.9}
+        self.size_hint = (0.1, 0.1)
+        self.text_size = (self.width, self.height)
+
+
+class ToolsScreen(RelativeLayout):
+    def __init__(self, **kwargs):
+        super(ToolsScreen, self).__init__(**kwargs)
+        with self.canvas:
+
+            Color(0, 0, 0)
+            self.r = Rectangle(pos=(0, self.height/5*4) ,size=(self.width, self.height/5))
+
+            self.bind(pos=self.update_rect, size=self.update_rect)
 
 
 
 
 
+
+    def update_rect(self, *args):
+        self.r.pos=(0, self.height/5*4)
+        self.r.size=(self.width, self.height/5)
 
 
 
@@ -87,7 +110,27 @@ class MainApp(App):
         self.create_tools_screen()
 
     def create_tools_screen(self):
-        pass
+        self.ts = ToolsScreen()
+        self.b1 = ToolScreenButton()
+        self.b2 = ToolScreenButton()
+        self.b3 = ToolScreenButton()
+
+        #Position settings
+        self.b1.pos_hint = {"center_x": .10, "center_y": .9}
+        self.b2.pos_hint = {"center_x": .25, "center_y": .9}
+        self.b3.pos_hint = {"center_x": .40, "center_y": .9}
+
+        #Content settings
+        self.b1.text = "Operatiuni"
+        self.b2.text = "Situatii Stocuri"
+        self.b3.text = "Setari"
+
+        self.ts.add_widget(self.b1)
+        self.ts.add_widget(self.b2)
+        self.ts.add_widget(self.b3)
+
+        self.rl.add_widget(self.ts)
+
 
 
     def create_login_screen(self, widget, item):
