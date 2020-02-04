@@ -74,10 +74,11 @@ class ToolScreenButton(Button):
     def __init__(self, **kwargs):
         super(ToolScreenButton, self).__init__(**kwargs)
         self.text = "Button"
-        self.background_color = (1, 1, 1, 1)
+        self.background_color = 1, 1, 1, 1
         self.pos_hint = {"center_x":0.1, "center_y":0.9}
         self.size_hint = (0.1, 0.1)
-        self.text_size = (self.width, self.height)
+        #self.text_size = (self.width/2, self.height/2)
+        self.halign = 'justify'
 
 
 class ToolsScreen(RelativeLayout):
@@ -89,11 +90,6 @@ class ToolsScreen(RelativeLayout):
             self.r = Rectangle(pos=(0, self.height/5*4) ,size=(self.width, self.height/5))
 
             self.bind(pos=self.update_rect, size=self.update_rect)
-
-
-
-
-
 
     def update_rect(self, *args):
         self.r.pos=(0, self.height/5*4)
@@ -109,27 +105,105 @@ class MainApp(App):
         self.rem_wid_wrap(widget, self.logo)
         self.create_tools_screen()
 
+    def on_tool_screen_button_pressed(self, widget):
+        #TODO: Still have to clean this, messing with python's *switch* statement atm
+        if (widget.id == "stoc"):
+            self.b4.text = "NIR"
+            self.b5.text = "Conturi"
+            self.b6.text = "Rapoarte"
+
+            self.b4.id = "nir"
+            self.b5.id = "cont"
+            self.b6.id = "rap"
+        elif (widget.id == "op"):
+            self.b4.text = "Intrari"
+            self.b5.text = "Iesiri"
+            self.b6.text = "Emite Factura"
+
+            self.b4.id = "in"
+            self.b5.id = "out"
+            self.b6.id = "ef"
+        elif (widget.id == "setari"):
+            self.b4.text = "Baze de date"
+            self.b5.text = "Utilizatori"
+            self.b6.text = "General"
+
+            self.b4.id = "bd"
+            self.b5.id = "user"
+            self.b6.id = "gen"
+
+        elif (widget.id == "in"):
+            pass
+        elif (widget.id == "out"):
+            pass
+        elif (widget.id == "ef"):
+            pass
+        elif (widget.id == "nir"):
+            pass
+        elif (widget.id == "cont"):
+            pass
+        elif (widget.id == "rap"):
+            pass
+        elif (widget.id == "bd"):
+            pass
+        elif (widget.id == "user"):
+            pass
+        elif (widget.id == "gen"):
+            pass
+        else:   #TODO: Better error handling
+            print("Widget not found")
+
     def create_tools_screen(self):
         self.ts = ToolsScreen()
         self.b1 = ToolScreenButton()
         self.b2 = ToolScreenButton()
         self.b3 = ToolScreenButton()
+        self.b4 = ToolScreenButton()
+        self.b5 = ToolScreenButton()
+        self.b6 = ToolScreenButton()
 
+        self.b1.id = "op"
+        self.b2.id = "stoc"
+        self.b3.id = "setari"
+        self.b4.id = "in"
+        self.b5.id = "out"
+        self.b6.id = "ef"
+
+        self.b1.bind(on_press=self.on_tool_screen_button_pressed)
+        self.b2.bind(on_press=self.on_tool_screen_button_pressed)
+        self.b3.bind(on_press=self.on_tool_screen_button_pressed)
+        self.b4.bind(on_press=self.on_tool_screen_button_pressed)
+        self.b5.bind(on_press=self.on_tool_screen_button_pressed)
+        self.b6.bind(on_press=self.on_tool_screen_button_pressed)
+
+        self.b4.size_hint = self.b5.size_hint = self.b6.size_hint = (0.25, 0.25)
         #Position settings
         self.b1.pos_hint = {"center_x": .10, "center_y": .9}
         self.b2.pos_hint = {"center_x": .25, "center_y": .9}
         self.b3.pos_hint = {"center_x": .40, "center_y": .9}
 
+        self.b4.pos_hint = {"center_x": .185, "center_y": .45}
+        self.b5.pos_hint = {"center_x": .495, "center_y": .45}
+        self.b6.pos_hint = {"center_x": .805, "center_y": .45}
+
+
         #Content settings
         self.b1.text = "Operatiuni"
-        self.b2.text = "Situatii Stocuri"
+        self.b2.text = "Stocuri"
         self.b3.text = "Setari"
+
+        self.b4.text = "Intrari"
+        self.b5.text = "Iesiri"
+        self.b6.text = "Emite factura"
 
         self.ts.add_widget(self.b1)
         self.ts.add_widget(self.b2)
         self.ts.add_widget(self.b3)
 
         self.rl.add_widget(self.ts)
+        self.rl.add_widget(self.b4)
+        self.rl.add_widget(self.b5)
+        self.rl.add_widget(self.b6)
 
 
 
