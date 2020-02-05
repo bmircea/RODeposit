@@ -2,6 +2,8 @@ language: python
 python:
   - "3.6"
 dist: bionic
+before_install:
+  - "sudo apt-get install xclip xsel --no-install-recommends --yes"
 services:
   -xvfb
 install:
